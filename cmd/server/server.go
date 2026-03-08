@@ -7,6 +7,8 @@ import (
 	"net"
 	"strconv"
 
+	"github.com/DiegoAmin/AmazonClone_PAP/internal/auth"
+	"github.com/DiegoAmin/AmazonClone_PAP/internal/logger"
 	"github.com/DiegoAmin/AmazonClone_PAP/internal/order"
 	"github.com/DiegoAmin/AmazonClone_PAP/internal/product"
 	"github.com/DiegoAmin/AmazonClone_PAP/internal/store"
@@ -18,6 +20,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	//Initialize the auth store
+	authStore := auth.NewAuthStore()
 
 	// Add some basic products to the store
 	p1, _ := product.NewProduct(1, "Laptop", 1000, 10)
@@ -43,43 +48,83 @@ func main() {
 			log.Println("Error accepting connection:", err)
 			continue
 		}
-		go handleConn(conn, store)
+		go handleConn(conn, store, authStore)
 	}
 }
 
-// handleConn handles the incoming connection from the client. It prompts the user to choose between admin and client mode, and then calls the appropriate handler function based on the user's choice.
-func handleConn(c net.Conn, store *store.Store) {
+// handleConn handles the incoming connection from the client. It prompts the user to choose between login and register, and then calls the appropriate handler function based on the user's choice.
+func handleConn(c net.Conn, store *store.Store, authStore *auth.AuthStore) {
 	defer c.Close()
-
-	fmt.Fprintf(c, "Welcome to the Amazon Clone Server!\n")
-	fmt.Fprintf(c, "1. Conectarse como Admin\n")
-	fmt.Fprintf(c, "2. Conectarse como Cliente\n")
-	fmt.Fprintf(c, "Please enter your choice: ")
 
 	choice := bufio.NewScanner(c)
 
-	if choice.Scan() {
-		switch choice.Text() {
-		case "1":
-			handleAdmin(c, choice, store)
-		case "2":
-			handleClient(c, choice, store)
-		default:
-			fmt.Fprintf(c, "Invalid choice. Please enter 1 or 2.\n")
+	for {
+		fmt.Fprintf(c, "Welcome to the Amazon Clone Server!\n")
+		fmt.Fprintf(c, "1. Login\n")
+		fmt.Fprintf(c, "2. Register\n")
+		fmt.Fprintf(c, "Please enter your choice:\n")
+
+		if choice.Scan() {
+			switch choice.Text() {
+			case "1":
+				fmt.Fprintf(c, "Enter username:\n")
+				choice.Scan()
+				username := choice.Text()
+				fmt.Fprintf(c, "Enter password:\n")
+				choice.Scan()
+				password := choice.Text()
+				user, err := authStore.Login(username, password)
+				if err != nil {
+					fmt.Fprintf(c, "Login failed: %s\n", err.Error())
+					continue
+				}
+				fmt.Fprintf(c, "Login successful! Welcome, %s!\n", user.Username)
+				if user.Role == "admin" {
+					handleAdmin(c, choice, store, user.Username, authStore)
+				} else {
+					handleClient(c, choice, store, user.Username)
+				}
+				return
+			case "2":
+				fmt.Fprintf(c, "Enter username:\n")
+				choice.Scan()
+				username := choice.Text()
+				fmt.Fprintf(c, "Enter password:\n")
+				choice.Scan()
+				password := choice.Text()
+				fmt.Fprintf(c, "Enter role (admin/customer):\n")
+				choice.Scan()
+				role := choice.Text()
+				if role != "admin" && role != "customer" {
+					fmt.Fprintf(c, "Invalid role. Please enter 'admin' or 'customer'.\n")
+					continue
+				}
+				err := authStore.Register(username, password, role)
+				if err != nil {
+					fmt.Fprintf(c, "Registration failed: %s\n", err.Error())
+					continue
+				}
+				fmt.Fprintf(c, "Registration successful!\n")
+				fmt.Fprintf(c, "You can now login with your new credentials.\n")
+			default:
+				fmt.Fprintf(c, "Invalid choice. Please enter 1 or 2.\n")
+			}
 		}
 	}
 }
 
 // handleAdmin handles the admin mode of the server, allowing the admin to add products, update stock and price, complete orders, and get orders report.
-func handleAdmin(c net.Conn, choice *bufio.Scanner, store *store.Store) {
+func handleAdmin(c net.Conn, choice *bufio.Scanner, store *store.Store, adminUsername string, authStore *auth.AuthStore) {
 	fmt.Fprintf(c, "Welcome to Admin Mode!\n")
+	logger.Log(fmt.Sprintf("ADMIN: %s logged in", adminUsername))
 	for {
 		fmt.Fprintf(c, "1. Add Product\n")
 		fmt.Fprintf(c, "2. Update Stock\n")
 		fmt.Fprintf(c, "3. Update Price\n")
 		fmt.Fprintf(c, "4. Get orders report\n")
 		fmt.Fprintf(c, "5. Complete order\n")
-		fmt.Fprintf(c, "6. Exit\n")
+		fmt.Fprintf(c, "6. List users\n")
+		fmt.Fprintf(c, "7. Exit\n")
 		fmt.Fprintf(c, "Please enter your choice:\n")
 
 		if choice.Scan() {
@@ -167,14 +212,14 @@ func handleAdmin(c net.Conn, choice *bufio.Scanner, store *store.Store) {
 				}
 
 			case "4": // Get orders report
-				ordersReport := store.OrderHistory("ADMIN")
+				ordersReport := store.OrderHistory()
 				if len(ordersReport) == 0 {
 					fmt.Fprintf(c, "No orders found.\n")
 					continue
 				}
 				fmt.Fprintf(c, "Orders Report:\n")
 				for _, o := range ordersReport {
-					fmt.Fprintf(c, "Order ID: %d | Status: %s | Total: %.2f\n", o.ID, o.Status, o.Total)
+					fmt.Fprintf(c, "Order ID: %d | Client: %s | Status: %s | Total: %.2f\n", o.ID, o.Username, o.Status, o.Total)
 					for _, item := range o.Items {
 						// Use frozen price from OrderItem, not current product price
 						// GetProduct is used only to display the name, price comes from the frozen item
@@ -198,14 +243,25 @@ func handleAdmin(c net.Conn, choice *bufio.Scanner, store *store.Store) {
 				} else {
 					fmt.Fprintf(c, "Order completed successfully!\n")
 				}
+			case "6": // List users
+				users := authStore.ListUsers()
+				if len(users) == 0 {
+					fmt.Fprintf(c, "No users found.\n")
+					continue
+				}
+				fmt.Fprintf(c, "Registered Users:\n")
+				for _, user := range users {
+					fmt.Fprintf(c, "Username: %s | Role: %s\n", user.Username, user.Role)
+				}
 
-			case "6": // Exit
+			case "7": // Exit
 				fmt.Fprintf(c, "Exiting Admin Mode. Goodbye!\n")
+				logger.Log(fmt.Sprintf("ADMIN: %s logged out", adminUsername))
 				fmt.Fprintf(c, "EXIT\n")
 				return
 
 			default:
-				fmt.Fprintf(c, "Invalid choice. Please enter a number between 1 and 6.\n")
+				fmt.Fprintf(c, "Invalid choice. Please enter a number between 1 and 7.\n")
 				continue
 			}
 		}
@@ -213,10 +269,11 @@ func handleAdmin(c net.Conn, choice *bufio.Scanner, store *store.Store) {
 }
 
 // handleClient handles the client mode of the server, allowing the client to view products, manage cart, place orders, view orders, and cancel orders.
-func handleClient(c net.Conn, choice *bufio.Scanner, store *store.Store) {
+func handleClient(c net.Conn, choice *bufio.Scanner, store *store.Store, username string) {
 	// cart is a map where the key is the product ID and the value is the quantity.
 	cart := make(map[int]int)
 	fmt.Fprintf(c, "Welcome to Client Mode!\n")
+	logger.Log(fmt.Sprintf("CLIENT: %s logged in", username))
 	for {
 		fmt.Fprintf(c, "1. See list of products\n")
 		fmt.Fprintf(c, "2. Add product to cart\n")
@@ -334,7 +391,7 @@ func handleClient(c net.Conn, choice *bufio.Scanner, store *store.Store) {
 				for id, quantity := range cart {
 					items = append(items, order.OrderItem{ProductID: id, Quantity: quantity})
 				}
-				newOrder, err := store.CreateOrder(items)
+				newOrder, err := store.CreateOrder(items, username)
 				if err != nil {
 					fmt.Fprintf(c, "Error placing order: %s\n", err.Error())
 					continue
@@ -343,7 +400,7 @@ func handleClient(c net.Conn, choice *bufio.Scanner, store *store.Store) {
 				fmt.Fprintf(c, "Order placed successfully! Order ID: %d | Total: %.2f\n", newOrder.ID, newOrder.Total)
 
 			case "6": // View all orders
-				ordersReport := store.OrderHistory("CLIENT")
+				ordersReport := store.OrderHistoryByUser(username)
 				if len(ordersReport) == 0 {
 					fmt.Fprintf(c, "No orders found.\n")
 					continue
@@ -368,7 +425,7 @@ func handleClient(c net.Conn, choice *bufio.Scanner, store *store.Store) {
 					fmt.Fprintf(c, "Invalid ID. Please enter a valid integer.\n")
 					continue
 				}
-				err = store.CancelOrder(id)
+				err = store.CancelOrder(id, username)
 				if err != nil {
 					fmt.Fprintf(c, "Error cancelling order: %s\n", err.Error())
 				} else {
@@ -377,6 +434,7 @@ func handleClient(c net.Conn, choice *bufio.Scanner, store *store.Store) {
 
 			case "8": // Exit
 				fmt.Fprintf(c, "Exiting Client Mode. Goodbye!\n")
+				logger.Log(fmt.Sprintf("CLIENT: %s logged out", username))
 				fmt.Fprintf(c, "EXIT\n")
 				return
 

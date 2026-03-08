@@ -159,3 +159,51 @@
  2026/03/08 00:12:39 CLIENT: order history requested
  2026/03/08 00:12:42 CLIENT: product list requested
  2026/03/08 00:12:57 ERROR: failed to complete order ID 2: order is cancelled and cannot be completed
+ 2026/03/08 12:35:59 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/08 12:35:59 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/08 12:35:59 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/08 12:37:24 ADMIN: product stock updated: ID=1, NewStock=0
+ 2026/03/08 12:37:31 CLIENT: product list requested
+ 2026/03/08 12:37:40 ERROR: not enough stock for product ID 1
+ 2026/03/08 13:37:42 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/08 13:37:42 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/08 13:37:42 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/08 13:38:14 AUTH: user logged in: carlos, role: customer
+ 2026/03/08 13:38:49 AUTH: user registered: Pedro, role: customer
+ 2026/03/08 13:38:57 AUTH: user logged in: Pedro, role: customer
+ 2026/03/08 13:39:19 AUTH: user registered: juan, role: admin
+ 2026/03/08 13:39:26 AUTH: user logged in: juan, role: admin
+ 2026/03/08 13:39:49 ERROR: user PedroJuan not found
+ 2026/03/08 13:39:58 ERROR: invalid password for user Pedro
+ 2026/03/08 13:44:02 ERROR: user Pedro already exists
+ 2026/03/08 14:39:39 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/08 14:39:39 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/08 14:39:39 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/08 14:40:23 AUTH: user logged in: admin, role: admin
+ 2026/03/08 14:40:23 ADMIN: admin logged in
+ 2026/03/08 14:41:02 AUTH: user logged in: carlos, role: customer
+ 2026/03/08 14:41:02 CLIENT: carlos logged in
+ 2026/03/08 14:41:41 CLIENT: product list requested
+ 2026/03/08 14:42:14 CLIENT: order history requested for user: carlos
+ 2026/03/08 14:42:20 CLIENT: order created: ID=1, Total=7500.00
+ 2026/03/08 14:42:28 CLIENT: order history requested for user: carlos
+ 2026/03/08 14:42:39 ADMIN: order history requested
+ 2026/03/08 14:43:15 AUTH: user registered: pedro, role: customer
+ 2026/03/08 14:43:26 AUTH: user logged in: pedro, role: customer
+ 2026/03/08 14:43:26 CLIENT: pedro logged in
+ 2026/03/08 14:43:37 CLIENT: order history requested for user: pedro
+ 2026/03/08 14:43:44 CLIENT: order history requested for user: carlos
+ 2026/03/08 14:43:49 CLIENT: product list requested
+ 2026/03/08 14:44:24 CLIENT: order created: ID=2, Total=12000.00
+ 2026/03/08 14:44:28 CLIENT: order history requested for user: pedro
+ 2026/03/08 14:44:38 ADMIN: order history requested
+ 2026/03/08 14:44:53 ADMIN: order completed: ID=1
+ 2026/03/08 14:45:00 ADMIN: order history requested
+ 2026/03/08 14:45:07 CLIENT: order history requested for user: carlos
+ 2026/03/08 14:45:18 ERROR: failed to cancel order ID 1: order is already completed and cannot be cancelled
+ 2026/03/08 14:45:34 CLIENT: order cancelled: ID=2, stock restored
+ 2026/03/08 14:45:40 CLIENT: order history requested for user: pedro
+ 2026/03/08 14:45:48 ERROR: failed to complete order ID 2: order is cancelled and cannot be completed
+ 2026/03/08 14:47:07 CLIENT: pedro logged out
+ 2026/03/08 14:47:18 AUTH: user logged in: pedro, role: customer
+ 2026/03/08 14:47:18 CLIENT: pedro logged in

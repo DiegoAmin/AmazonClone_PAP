@@ -38,7 +38,7 @@ func (s *Store) AddProduct(p product.Product) error {
 
 // CreateOrder creates a new order with the given items. It validates stock availability before making any changes.
 // Prices are frozen at the time of order creation to avoid price changes affecting past orders.
-func (s *Store) CreateOrder(items []order.OrderItem) (*order.Order, error) {
+func (s *Store) CreateOrder(items []order.OrderItem, username string) (*order.Order, error) {
 	orderID := len(s.Orders) + 1
 
 	// Step 1: Validate that all products exist and have enough stock before making any changes.
@@ -64,7 +64,7 @@ func (s *Store) CreateOrder(items []order.OrderItem) (*order.Order, error) {
 		}
 	}
 
-	newOrder, err := order.NewOrder(orderID, frozenItems)
+	newOrder, err := order.NewOrder(orderID, username, frozenItems)
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: failed to create order: %s", err.Error()))
 		return nil, err
@@ -104,11 +104,15 @@ func (s *Store) CompleteOrder(orderID int) error {
 
 // CancelOrder marks an order as cancelled and restores the stock of all items in the order.
 // It returns an error if the order does not exist or if it is already completed or cancelled.
-func (s *Store) CancelOrder(orderID int) error {
+func (s *Store) CancelOrder(orderID int, username string) error {
 	o, exists := s.Orders[orderID]
 	if !exists {
 		logger.Log(fmt.Sprintf("ERROR: order with ID %d not found", orderID))
 		return fmt.Errorf("order with ID %d not found", orderID)
+	}
+	if o.Username != username {
+		logger.Log(fmt.Sprintf("ERROR: user %s is not authorized to cancel order ID %d", username, orderID))
+		return fmt.Errorf("user %s is not authorized to cancel this order", username)
 	}
 	if err := o.CancelOrder(); err != nil {
 		logger.Log(fmt.Sprintf("ERROR: failed to cancel order ID %d: %s", orderID, err.Error()))
@@ -157,11 +161,23 @@ func (s *Store) UpdateStock(productID int, stock int) error {
 }
 
 // OrderHistory returns all orders in the store as a slice.
-func (s *Store) OrderHistory(caller string) []*order.Order {
-	logger.Log(fmt.Sprintf("%s: order history requested", caller))
+func (s *Store) OrderHistory() []*order.Order {
+	logger.Log("ADMIN: order history requested")
 	orders := make([]*order.Order, 0, len(s.Orders))
 	for _, order := range s.Orders {
 		orders = append(orders, order)
+	}
+	return orders
+}
+
+// OrderHistoryByUser returns all orders for a specific user as a slice. It returns an error if no orders are found for the user.
+func (s *Store) OrderHistoryByUser(username string) []*order.Order {
+	logger.Log(fmt.Sprintf("CLIENT: order history requested for user: %s", username))
+	orders := make([]*order.Order, 0)
+	for _, order := range s.Orders {
+		if order.Username == username {
+			orders = append(orders, order)
+		}
 	}
 	return orders
 }

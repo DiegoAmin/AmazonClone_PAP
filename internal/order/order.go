@@ -24,24 +24,26 @@ const (
 
 // Order represents a customer's order, which includes the order ID, status, items, and total price.
 type Order struct {
-	ID     int
-	Status OrderStatus
-	Items  []OrderItem
-	Total  float64
+	ID       int
+	Username string
+	Status   OrderStatus
+	Items    []OrderItem
+	Total    float64
 }
 
 // NewOrder is a constructor function that creates a new order with the given ID and items.
-func NewOrder(id int, items []OrderItem) (*Order, error) {
+func NewOrder(id int, username string, items []OrderItem) (*Order, error) {
 	// Validate that the order contains at least one item.
 	if len(items) == 0 {
 		return nil, errors.New("order must contain at least one item")
 	}
 
 	return &Order{
-		ID:     id,
-		Status: Created,
-		Items:  items,
-		Total:  0.0, // Total will be calculated based on the items and their prices.
+		ID:       id,
+		Username: username,
+		Status:   Created,
+		Items:    items,
+		Total:    0.0, // Total will be calculated based on the items and their prices.
 	}, nil
 }
 
