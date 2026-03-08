@@ -1,0 +1,161 @@
+ 2026/03/07 22:04:32 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 22:04:32 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 22:04:32 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 22:05:14 ADMIN: order history requested
+ 2026/03/07 22:08:48 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 22:08:48 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 22:08:48 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 22:09:29 ERROR: product with ID 2 already exists
+ 2026/03/07 22:10:20 ADMIN: product added: ID=4, Name=Sofa, Price=4000.00, Stock=10
+ 2026/03/07 22:11:05 ADMIN: product stock updated: ID=1, NewStock=5
+ 2026/03/07 22:11:39 ADMIN: product price updated: ID=3, NewPrice=2800.00
+ 2026/03/07 22:16:44 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 22:16:44 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 22:16:44 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 22:19:47 CLIENT: product list requested
+ 2026/03/07 22:20:47 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 22:20:47 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 22:20:47 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 22:21:12 CLIENT: product list requested
+ 2026/03/07 22:28:17 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 22:28:17 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 22:28:17 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 22:28:35 CLIENT: product list requested
+ 2026/03/07 22:29:15 CLIENT: product list requested
+ 2026/03/07 22:29:20 CLIENT: product list requested
+ 2026/03/07 22:29:21 CLIENT: product list requested
+ 2026/03/07 22:29:22 CLIENT: product list requested
+ 2026/03/07 22:29:23 CLIENT: product list requested
+ 2026/03/07 22:29:24 CLIENT: product list requested
+ 2026/03/07 22:29:24 CLIENT: product list requested
+ 2026/03/07 22:29:25 CLIENT: product list requested
+ 2026/03/07 22:29:34 CLIENT: product list requested
+ 2026/03/07 22:29:36 CLIENT: product list requested
+ 2026/03/07 22:29:36 CLIENT: product list requested
+ 2026/03/07 22:33:27 CLIENT: product list requested
+ 2026/03/07 22:33:36 CLIENT: order created: ID=1, Total=13000.00
+ 2026/03/07 22:33:50 CLIENT: product list requested
+ 2026/03/07 22:33:56 CLIENT: product list requested
+ 2026/03/07 22:33:57 CLIENT: product list requested
+ 2026/03/07 22:34:38 ADMIN: order history requested
+ 2026/03/07 23:11:16 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 23:11:16 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 23:11:16 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 23:11:41 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 23:11:41 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 23:11:41 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 23:13:12 CLIENT: product list requested
+ 2026/03/07 23:13:32 ADMIN: order history requested
+ 2026/03/07 23:14:09 CLIENT: product list requested
+ 2026/03/07 23:14:15 CLIENT: product list requested
+ 2026/03/07 23:14:18 CLIENT: product list requested
+ 2026/03/07 23:14:30 CLIENT: order created: ID=1, Total=6500.00
+ 2026/03/07 23:14:38 ADMIN: order history requested
+ 2026/03/07 23:16:00 ADMIN: order history requested
+ 2026/03/07 23:17:34 CLIENT: product list requested
+ 2026/03/07 23:17:52 ADMIN: order history requested
+ 2026/03/07 23:18:00 CLIENT: order cancelled: ID=1
+ 2026/03/07 23:18:10 ADMIN: order history requested
+ 2026/03/07 23:18:21 ERROR: failed to complete order ID 1: order is cancelled and cannot be completed
+ 2026/03/07 23:25:19 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 23:25:19 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 23:25:19 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 23:25:59 CLIENT: order history requested
+ 2026/03/07 23:26:18 CLIENT: product list requested
+ 2026/03/07 23:26:40 CLIENT: product list requested
+ 2026/03/07 23:27:23 CLIENT: product list requested
+ 2026/03/07 23:27:37 CLIENT: product list requested
+ 2026/03/07 23:27:42 CLIENT: order created: ID=1, Total=7500.00
+ 2026/03/07 23:27:45 CLIENT: product list requested
+ 2026/03/07 23:27:50 CLIENT: product list requested
+ 2026/03/07 23:28:16 CLIENT: product list requested
+ 2026/03/07 23:28:35 CLIENT: product list requested
+ 2026/03/07 23:28:43 CLIENT: order created: ID=2, Total=50000.00
+ 2026/03/07 23:28:47 CLIENT: order history requested
+ 2026/03/07 23:29:13 ADMIN: order history requested
+ 2026/03/07 23:29:20 ADMIN: order completed: ID=1
+ 2026/03/07 23:29:29 ADMIN: order history requested
+ 2026/03/07 23:29:38 CLIENT: order history requested
+ 2026/03/07 23:29:49 ERROR: failed to cancel order ID 1: order is already completed and cannot be cancelled
+ 2026/03/07 23:29:59 CLIENT: order cancelled: ID=2
+ 2026/03/07 23:30:05 CLIENT: order history requested
+ 2026/03/07 23:30:17 ERROR: failed to complete order ID 2: order is cancelled and cannot be completed
+ 2026/03/07 23:30:29 CLIENT: product list requested
+ 2026/03/07 23:30:35 CLIENT: product list requested
+ 2026/03/07 23:30:58 CLIENT: product list requested
+ 2026/03/07 23:31:32 CLIENT: order created: ID=3, Total=500.00
+ 2026/03/07 23:31:40 CLIENT: order history requested
+ 2026/03/07 23:31:57 ADMIN: product price updated: ID=2, NewPrice=1500.00
+ 2026/03/07 23:32:09 ADMIN: order history requested
+ 2026/03/07 23:41:26 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 23:41:26 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 23:41:26 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 23:41:51 CLIENT: product list requested
+ 2026/03/07 23:41:52 CLIENT: product list requested
+ 2026/03/07 23:42:08 CLIENT: order created: ID=1, Total=5000.00
+ 2026/03/07 23:42:12 CLIENT: order history requested
+ 2026/03/07 23:42:47 CLIENT: product list requested
+ 2026/03/07 23:42:54 ADMIN: product price updated: ID=1, NewPrice=1500.00
+ 2026/03/07 23:42:59 ADMIN: order history requested
+ 2026/03/07 23:43:19 CLIENT: product list requested
+ 2026/03/07 23:43:20 CLIENT: product list requested
+ 2026/03/07 23:44:49 ADMIN: product stock updated: ID=1, NewStock=10
+ 2026/03/07 23:45:00 CLIENT: product list requested
+ 2026/03/07 23:45:23 CLIENT: order created: ID=2, Total=7500.00
+ 2026/03/07 23:45:36 CLIENT: product list requested
+ 2026/03/07 23:45:56 CLIENT: order history requested
+ 2026/03/07 23:46:18 CLIENT: product list requested
+ 2026/03/07 23:46:58 CLIENT: product list requested
+ 2026/03/07 23:47:41 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 23:47:41 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 23:47:41 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 23:48:04 CLIENT: product list requested
+ 2026/03/07 23:48:06 CLIENT: product list requested
+ 2026/03/07 23:48:07 CLIENT: product list requested
+ 2026/03/07 23:48:17 CLIENT: product list requested
+ 2026/03/07 23:48:54 ADMIN: product stock updated: ID=1, NewStock=30
+ 2026/03/07 23:49:00 CLIENT: product list requested
+ 2026/03/07 23:55:52 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/07 23:55:52 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/07 23:55:52 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/07 23:56:42 ERROR: product with ID 1 already exists
+ 2026/03/07 23:57:18 CLIENT: order created: ID=1, Total=1000.00
+ 2026/03/07 23:57:30 ADMIN: order completed: ID=1
+ 2026/03/07 23:57:34 ERROR: failed to complete order ID 1: order is already completed
+ 2026/03/08 00:01:23 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/08 00:01:23 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/08 00:01:23 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/08 00:01:36 CLIENT: product list requested
+ 2026/03/08 00:01:45 CLIENT: order created: ID=1, Total=5000.00
+ 2026/03/08 00:01:50 CLIENT: order history requested
+ 2026/03/08 00:01:52 CLIENT: product list requested
+ 2026/03/08 00:02:00 CLIENT: order cancelled: ID=1, stock restored
+ 2026/03/08 00:02:03 CLIENT: product list requested
+ 2026/03/08 00:02:20 CLIENT: order created: ID=2, Total=5000.00
+ 2026/03/08 00:02:36 CLIENT: order history requested
+ 2026/03/08 00:03:08 ADMIN: product price updated: ID=1, NewPrice=1500.00
+ 2026/03/08 00:03:11 ADMIN: order history requested
+ 2026/03/08 00:03:23 CLIENT: order cancelled: ID=2, stock restored
+ 2026/03/08 00:03:26 CLIENT: product list requested
+ 2026/03/08 00:05:25 CLIENT: order history requested
+ 2026/03/08 00:09:19 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/08 00:09:19 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/08 00:09:19 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/08 00:10:02 CLIENT: product list requested
+ 2026/03/08 00:10:06 ADMIN: product added: ID=4, Name=Chair, Price=400.00, Stock=40
+ 2026/03/08 00:10:11 CLIENT: product list requested
+ 2026/03/08 00:10:13 CLIENT: product list requested
+ 2026/03/08 00:10:15 CLIENT: product list requested
+ 2026/03/08 00:11:04 CLIENT: order created: ID=1, Total=8500.00
+ 2026/03/08 00:11:20 ADMIN: order completed: ID=1
+ 2026/03/08 00:11:24 ADMIN: order history requested
+ 2026/03/08 00:11:34 ERROR: failed to cancel order ID 1: order is already completed and cannot be cancelled
+ 2026/03/08 00:11:44 CLIENT: product list requested
+ 2026/03/08 00:11:47 CLIENT: product list requested
+ 2026/03/08 00:12:09 CLIENT: order created: ID=2, Total=4000.00
+ 2026/03/08 00:12:11 CLIENT: order history requested
+ 2026/03/08 00:12:28 CLIENT: order cancelled: ID=2, stock restored
+ 2026/03/08 00:12:34 CLIENT: order history requested
+ 2026/03/08 00:12:39 CLIENT: order history requested
+ 2026/03/08 00:12:42 CLIENT: product list requested
+ 2026/03/08 00:12:57 ERROR: failed to complete order ID 2: order is cancelled and cannot be completed
