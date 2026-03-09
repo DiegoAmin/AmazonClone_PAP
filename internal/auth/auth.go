@@ -1,7 +1,9 @@
 package auth
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/DiegoAmin/AmazonClone_PAP/internal/logger"
@@ -24,13 +26,6 @@ func NewAuthStore() *AuthStore {
 	a := &AuthStore{
 		Users: make(map[string]*User),
 	}
-
-	// Default users so the system can be tested without registering
-	a.Users["admin"] = &User{Username: "admin", Password: "admin123", Role: "admin"}
-	a.Users["carlos"] = &User{Username: "carlos", Password: "carlos123", Role: "customer"}
-	a.Users["diego"] = &User{Username: "diego", Password: "diego123", Role: "customer"}
-	a.Users["diego2"] = &User{Username: "diego2", Password: "diego2123", Role: "customer"}
-
 	return a
 }
 
@@ -53,6 +48,11 @@ func (a *AuthStore) Register(username, password, role string) error {
 		Role:     role,
 	}
 	logger.Log(fmt.Sprintf("AUTH: user registered: %s, role: %s", username, role))
+
+	// Save the updated users to the JSON file after every registration.
+	if err := a.Save("users.json"); err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save users after registration: %s", err.Error()))
+	}
 	return nil
 }
 
@@ -71,6 +71,7 @@ func (a *AuthStore) Login(username, password string) (*User, error) {
 	}
 }
 
+// ListUsers returns a slice of all users in the AuthStore. This function is intended for admin use only.
 func (a *AuthStore) ListUsers() []*User {
 	logger.Log("ADMIN: user list requested")
 	users := make([]*User, 0, len(a.Users))
@@ -78,4 +79,37 @@ func (a *AuthStore) ListUsers() []*User {
 		users = append(users, user)
 	}
 	return users
+}
+
+// Save saves the AuthStore data to a JSON file. It returns an error if the file cannot be written.
+func (a *AuthStore) Save(filename string) error {
+	data, err := json.MarshalIndent(a, "", "  ")
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to marshal users: %s", err.Error()))
+		return err
+	}
+	err = os.WriteFile(filename, data, 0644)
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save users to file: %s", err.Error()))
+		return err
+	}
+	logger.Log(fmt.Sprintf("AUTH: users saved to file: %s", filename))
+	return nil
+}
+
+// Load reads the AuthStore data from a JSON file and returns a new AuthStore instance with the loaded data.
+func Load(filename string) (*AuthStore, error) {
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to read users from file: %s", err.Error()))
+		return nil, err
+	}
+	var authStore AuthStore
+	err = json.Unmarshal(data, &authStore)
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to unmarshal users from file: %s", err.Error()))
+		return nil, err
+	}
+	logger.Log(fmt.Sprintf("AUTH: users loaded from file: %s", filename))
+	return &authStore, nil
 }

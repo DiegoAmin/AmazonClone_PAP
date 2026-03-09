@@ -207,3 +207,95 @@
  2026/03/08 14:47:07 CLIENT: pedro logged out
  2026/03/08 14:47:18 AUTH: user logged in: pedro, role: customer
  2026/03/08 14:47:18 CLIENT: pedro logged in
+ 2026/03/08 16:40:41 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/08 16:40:41 Store data saved to file: store.json
+ 2026/03/08 16:40:41 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/08 16:40:41 Store data saved to file: store.json
+ 2026/03/08 16:40:41 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/08 16:40:41 Store data saved to file: store.json
+ 2026/03/08 16:40:41 Store data saved to file: store.json
+ 2026/03/08 16:40:41 AUTH: users saved to file: users.json
+ 2026/03/08 16:41:22 AUTH: user logged in: admin, role: admin
+ 2026/03/08 16:41:22 ADMIN: admin logged in
+ 2026/03/08 16:41:39 AUTH: user logged in: carlos, role: customer
+ 2026/03/08 16:41:39 CLIENT: carlos logged in
+ 2026/03/08 16:42:08 AUTH: user registered: pedro, role: customer
+ 2026/03/08 16:42:08 AUTH: users saved to file: users.json
+ 2026/03/08 16:42:30 AUTH: user logged in: pedro, role: customer
+ 2026/03/08 16:42:30 CLIENT: pedro logged in
+ 2026/03/08 16:43:00 AUTH: user registered: admin2, role: admin
+ 2026/03/08 16:43:00 AUTH: users saved to file: users.json
+ 2026/03/08 16:43:16 ERROR: invalid password for user admin2
+ 2026/03/08 16:43:35 AUTH: user logged in: admin2, role: admin
+ 2026/03/08 16:43:35 ADMIN: admin2 logged in
+ 2026/03/08 16:44:28 CLIENT: order created: ID=1, Total=5000.00
+ 2026/03/08 16:44:28 Store data saved to file: store.json
+ 2026/03/08 16:44:54 ADMIN: order history requested
+ 2026/03/08 16:45:06 ADMIN: order completed: ID=1
+ 2026/03/08 16:45:06 Store data saved to file: store.json
+ 2026/03/08 16:45:34 ADMIN: product stock updated: ID=1, NewStock=10
+ 2026/03/08 16:45:34 Store data saved to file: store.json
+ 2026/03/08 16:57:07 Store data loaded from file: store.json
+ 2026/03/08 16:57:07 Store data loaded from store.json
+ 2026/03/08 16:57:07 AUTH: users loaded from file: users.json
+ 2026/03/08 16:57:07 User data loaded from users.json
+ 2026/03/08 16:57:22 AUTH: user logged in: admin, role: admin
+ 2026/03/08 16:57:22 ADMIN: admin logged in
+ 2026/03/08 16:58:38 ADMIN: product added: ID=1, Name=Laptop, Price=1000.00, Stock=10
+ 2026/03/08 16:58:38 Store data saved to file: store.json
+ 2026/03/08 16:58:38 ADMIN: product added: ID=2, Name=Desktop, Price=500.00, Stock=30
+ 2026/03/08 16:58:38 Store data saved to file: store.json
+ 2026/03/08 16:58:38 ADMIN: product added: ID=3, Name=TV32in, Price=3000.00, Stock=40
+ 2026/03/08 16:58:38 Store data saved to file: store.json
+ 2026/03/08 16:58:38 Store data saved to file: store.json
+ 2026/03/08 16:58:38 AUTH: users saved to file: users.json
+ 2026/03/08 16:58:55 AUTH: user logged in: carlos, role: customer
+ 2026/03/08 16:58:55 CLIENT: carlos logged in
+ 2026/03/08 16:59:22 Store data loaded from file: store.json
+ 2026/03/08 16:59:22 Store data loaded from store.json
+ 2026/03/08 16:59:22 AUTH: users loaded from file: users.json
+ 2026/03/08 16:59:22 User data loaded from users.json
+ 2026/03/08 16:59:34 AUTH: user logged in: admin, role: admin
+ 2026/03/08 16:59:34 ADMIN: admin logged in
+ 2026/03/08 17:01:04 ADMIN: admin logged out
+ 2026/03/08 17:41:10 Store data loaded from file: store.json
+ 2026/03/08 17:41:10 Store data loaded from store.json
+ 2026/03/08 17:41:10 AUTH: users loaded from file: users.json
+ 2026/03/08 17:41:10 User data loaded from users.json
+ 2026/03/08 17:41:58 AUTH: user logged in: admin, role: admin
+ 2026/03/08 17:41:58 ADMIN: admin logged in
+ 2026/03/08 17:42:37 AUTH: user logged in: admin, role: admin
+ 2026/03/08 17:42:37 ADMIN: admin logged in
+ 2026/03/08 17:42:58 ADMIN: product added: ID=4, Name=Mouse, Price=300.00, Stock=25
+ 2026/03/08 17:42:58 Store data saved to file: store.json
+ 2026/03/08 17:43:17 ADMIN: product stock updated: ID=4, NewStock=0
+ 2026/03/08 17:43:17 Store data saved to file: store.json
+ 2026/03/08 17:43:47 ADMIN: product price updated: ID=4, NewPrice=400.00
+ 2026/03/08 17:43:47 Store data saved to file: store.json
+ 2026/03/08 17:44:24 ERROR: invalid password for user carlos
+ 2026/03/08 17:44:34 AUTH: user logged in: carlos, role: customer
+ 2026/03/08 17:44:34 CLIENT: carlos logged in
+ 2026/03/08 17:44:59 CLIENT: order created: ID=1, Total=2500.00
+ 2026/03/08 17:44:59 Store data saved to file: store.json
+ 2026/03/08 17:45:11 ADMIN: order history requested
+ 2026/03/08 17:45:42 ADMIN: order completed: ID=1
+ 2026/03/08 17:45:42 Store data saved to file: store.json
+ 2026/03/08 17:45:46 ADMIN: order history requested
+ 2026/03/08 17:46:22 ADMIN: user list requested
+ 2026/03/08 17:46:38 ADMIN: admin logged out
+ 2026/03/08 17:50:18 Store data loaded from file: store.json
+ 2026/03/08 17:50:18 Store data loaded from store.json
+ 2026/03/08 17:50:18 AUTH: users loaded from file: users.json
+ 2026/03/08 17:50:18 User data loaded from users.json
+ 2026/03/08 17:50:40 AUTH: user logged in: admin, role: admin
+ 2026/03/08 17:50:40 ADMIN: admin logged in
+ 2026/03/08 17:50:54 AUTH: user logged in: carlos, role: customer
+ 2026/03/08 17:50:54 CLIENT: carlos logged in
+ 2026/03/08 17:51:12 CLIENT: product list requested
+ 2026/03/08 17:53:30 CLIENT: order created: ID=2, Total=12000.00
+ 2026/03/08 17:53:30 Store data saved to file: store.json
+ 2026/03/08 17:53:52 CLIENT: order history requested for user: carlos
+ 2026/03/08 17:54:23 CLIENT: order cancelled: ID=2, stock restored
+ 2026/03/08 17:54:23 Store data saved to file: store.json
+ 2026/03/08 17:54:28 CLIENT: order history requested for user: carlos
+ 2026/03/08 17:54:45 CLIENT: carlos logged out

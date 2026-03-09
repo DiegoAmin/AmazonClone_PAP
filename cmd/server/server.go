@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 	"strconv"
 
 	"github.com/DiegoAmin/AmazonClone_PAP/internal/auth"
@@ -15,22 +16,58 @@ import (
 )
 
 func main() {
+
+	//Declare the store
+	var s *store.Store
+
 	// Initialize the store
-	store, err := store.NewStore()
-	if err != nil {
-		panic(err)
+	_, err := os.Stat("store.json")
+	if os.IsNotExist(err) { // If the file does not exist, create a new store and add some default products
+		s, err = store.NewStore()
+		if err != nil {
+			panic(err)
+		}
+		// Add some basic products to the store
+		p1, _ := product.NewProduct(1, "Laptop", 1000, 10)
+		s.AddProduct(*p1)
+		p2, _ := product.NewProduct(2, "Desktop", 500, 30)
+		s.AddProduct(*p2)
+		p3, _ := product.NewProduct(3, "TV32in", 3000, 40)
+		s.AddProduct(*p3)
+		if err := s.Save("store.json"); err != nil {
+			panic(err)
+		}
+	} else { // If the file exists, load the store data from the file
+		s, err = store.Load("store.json")
+		if err != nil {
+			panic(err)
+		}
+		logger.Log("Store data loaded from store.json")
 	}
 
 	//Initialize the auth store
-	authStore := auth.NewAuthStore()
+	var authStore *auth.AuthStore
 
-	// Add some basic products to the store
-	p1, _ := product.NewProduct(1, "Laptop", 1000, 10)
-	store.AddProduct(*p1)
-	p2, _ := product.NewProduct(2, "Desktop", 500, 30)
-	store.AddProduct(*p2)
-	p3, _ := product.NewProduct(3, "TV32in", 3000, 40)
-	store.AddProduct(*p3)
+	_, err = os.Stat("users.json")
+	if os.IsNotExist(err) {
+		authStore = auth.NewAuthStore()
+
+		// Default users so the system can be tested without registering
+		authStore.Users["admin"] = &auth.User{Username: "admin", Password: "admin123", Role: "admin"}
+		authStore.Users["carlos"] = &auth.User{Username: "carlos", Password: "carlos123", Role: "customer"}
+		authStore.Users["diego"] = &auth.User{Username: "diego", Password: "diego123", Role: "customer"}
+		authStore.Users["diego2"] = &auth.User{Username: "diego2", Password: "diego2123", Role: "customer"}
+
+		if err := authStore.Save("users.json"); err != nil {
+			panic(err)
+		}
+	} else {
+		authStore, err = auth.Load("users.json")
+		if err != nil {
+			panic(err)
+		}
+		logger.Log("User data loaded from users.json")
+	}
 
 	// Open a port to listen for incoming connections
 	listener, err := net.Listen("tcp", "localhost:10000")
@@ -48,7 +85,7 @@ func main() {
 			log.Println("Error accepting connection:", err)
 			continue
 		}
-		go handleConn(conn, store, authStore)
+		go handleConn(conn, s, authStore)
 	}
 }
 

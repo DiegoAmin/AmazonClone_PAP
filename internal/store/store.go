@@ -1,7 +1,9 @@
 package store
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/DiegoAmin/AmazonClone_PAP/internal/logger"
 	"github.com/DiegoAmin/AmazonClone_PAP/internal/order"
@@ -25,6 +27,42 @@ func NewStore() (*Store, error) {
 	}, nil
 }
 
+// Load reads the store state from a JSON file and returns a new Store instance with the loaded data.
+func Load(filename string) (*Store, error) {
+	if err := logger.Init("store.log"); err != nil {
+		return nil, err
+	}
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to read store data from file: %s", err.Error()))
+		return nil, err
+	}
+	var s Store
+	err = json.Unmarshal(data, &s)
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to unmarshal store data: %s", err.Error()))
+		return nil, err
+	}
+	logger.Log(fmt.Sprintf("Store data loaded from file: %s", filename))
+	return &s, nil
+}
+
+// Save writes the current store state to a JSON file.
+func (s *Store) Save(filename string) error {
+	data, err := json.MarshalIndent(s, "", "  ")
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to marshal store data: %s", err.Error()))
+		return err
+	}
+	err = os.WriteFile(filename, data, 0644)
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to write store data to file: %s", err.Error()))
+		return err
+	}
+	logger.Log(fmt.Sprintf("Store data saved to file: %s", filename))
+	return nil
+}
+
 // AddProduct adds a new product to the store. It returns an error if a product with the same ID already exists.
 func (s *Store) AddProduct(p product.Product) error {
 	if _, exists := s.Products[p.ID]; exists {
@@ -33,6 +71,9 @@ func (s *Store) AddProduct(p product.Product) error {
 	}
 	s.Products[p.ID] = &p
 	logger.Log(fmt.Sprintf("ADMIN: product added: ID=%d, Name=%s, Price=%.2f, Stock=%d", p.ID, p.Name, p.Price, p.Stock))
+	if err := s.Save("store.json"); err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save store after adding product: %s", err.Error()))
+	}
 	return nil
 }
 
@@ -84,6 +125,9 @@ func (s *Store) CreateOrder(items []order.OrderItem, username string) (*order.Or
 
 	s.Orders[orderID] = newOrder
 	logger.Log(fmt.Sprintf("CLIENT: order created: ID=%d, Total=%.2f", newOrder.ID, newOrder.Total))
+	if err := s.Save("store.json"); err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save store after creating order: %s", err.Error()))
+	}
 	return newOrder, nil
 }
 
@@ -99,6 +143,9 @@ func (s *Store) CompleteOrder(orderID int) error {
 		return err
 	}
 	logger.Log(fmt.Sprintf("ADMIN: order completed: ID=%d", orderID))
+	if err := s.Save("store.json"); err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save store after completing order: %s", err.Error()))
+	}
 	return nil
 }
 
@@ -127,6 +174,9 @@ func (s *Store) CancelOrder(orderID int, username string) error {
 	}
 
 	logger.Log(fmt.Sprintf("CLIENT: order cancelled: ID=%d, stock restored", orderID))
+	if err := s.Save("store.json"); err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save store after cancelling order: %s", err.Error()))
+	}
 	return nil
 }
 
@@ -142,6 +192,9 @@ func (s *Store) UpdatePrice(productID int, price float64) error {
 		return err
 	}
 	logger.Log(fmt.Sprintf("ADMIN: product price updated: ID=%d, NewPrice=%.2f", productID, price))
+	if err := s.Save("store.json"); err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save store after updating price: %s", err.Error()))
+	}
 	return nil
 }
 
@@ -157,6 +210,9 @@ func (s *Store) UpdateStock(productID int, stock int) error {
 		return err
 	}
 	logger.Log(fmt.Sprintf("ADMIN: product stock updated: ID=%d, NewStock=%d", productID, stock))
+	if err := s.Save("store.json"); err != nil {
+		logger.Log(fmt.Sprintf("ERROR: failed to save store after updating stock: %s", err.Error()))
+	}
 	return nil
 }
 
@@ -170,7 +226,7 @@ func (s *Store) OrderHistory() []*order.Order {
 	return orders
 }
 
-// OrderHistoryByUser returns all orders for a specific user as a slice. It returns an error if no orders are found for the user.
+// OrderHistoryByUser returns all orders for a specific user as a slice.
 func (s *Store) OrderHistoryByUser(username string) []*order.Order {
 	logger.Log(fmt.Sprintf("CLIENT: order history requested for user: %s", username))
 	orders := make([]*order.Order, 0)
